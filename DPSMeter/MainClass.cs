@@ -15,7 +15,7 @@ namespace DPSMeter
             Name = "DPSMeter",
             Author = "Isse",
             Guid = Author + "." + Name,
-            Version = "1.0.0.0";
+            Version = "1.0.1.0";
 
         public static MainClass instance;
         public Harmony harmony;
@@ -32,8 +32,6 @@ namespace DPSMeter
             log = Logger;
             harmony = new Harmony(Guid);
             harmony.PatchAll();
-
-            log.LogMessage("DPSMETER ON!!!!");
 
         }
     }

@@ -8,6 +8,9 @@ namespace DPSMeter
     {
         public static DPSMeter instance;
 
+        const float highDamage = 1000f;
+        Gradient dpsColor;
+
         public void AddDamage(int damage)
         {
             dps += damage;
@@ -27,6 +30,10 @@ namespace DPSMeter
             else
                 instance = this;
             text = gameObject.GetComponent<TextMeshProUGUI>();
+            dpsColor = new Gradient();
+            dpsColor.SetKeys(new GradientColorKey[] { new GradientColorKey(Color.white, 0.0f), new GradientColorKey(Color.white, 0.3f),
+                                                      new GradientColorKey(Color.yellow, 0.7f), new GradientColorKey(Color.red, 1.0f) },
+                             new GradientAlphaKey[] { new GradientAlphaKey(1, 0), new GradientAlphaKey(1, 1) });
         }
 
         void Update()
@@ -43,7 +50,9 @@ namespace DPSMeter
             {
                 combatTime += Time.deltaTime;
                 text.enabled = true;
-                text.text = "DPS: " + (dps / combatTime).ToString("N0");
+                float f = (dps / combatTime);
+                text.text = "DPS: " + f.ToString("N0");
+                text.color = dpsColor.Evaluate(f / highDamage);
             }
         }
     }
